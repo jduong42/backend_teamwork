@@ -1,0 +1,19 @@
+.most-purchased {
+    margin-bottom: 20px;
+}
+
+.most-purchased h2 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.bicycles {
+    display: flex;
+    justify-content: space-around;
+}
+
+.bicycles a img {
+    width: 200px; /* Set a fixed width */
+    height: 150px; /* Set a fixed height */
+    object-fit: cover; /* Ensure the image covers the area without distortion */
+}

@@ -1,0 +1,27 @@
+.latest-articles {
+    margin-bottom: 20px;
+}
+
+.latest-articles h2 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.latest-articles ul {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+}
+
+.latest-articles ul li {
+    margin-bottom: 10px;
+}
+
+.latest-articles ul li a {
+    text-decoration: none;
+    color: #333;
+}
+
+.latest-articles ul li a:hover {
+    text-decoration: underline;
+}

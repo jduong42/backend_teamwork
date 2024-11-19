@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/homepage.css">
+    <link rel="stylesheet" href="/styles/navigation_bar.css">
+    <link rel="stylesheet" href="/styles/footer.css">
+    <link rel="stylesheet" href="/styles/carousel.css">
+    <link rel="stylesheet" href="/styles/most_purchased.css">
+    <link rel="stylesheet" href="/styles/latest_articles.css">
+    <link rel="stylesheet" href="/styles/error.css">
+    <title><%= title %></title>
+</head>
+<body>
+    <%- include('partials/navigation') %>
+    <div class="container">
+        <%- body %>
+    </div>
+    <%- include('partials/footer') %>
+    <script src="/scripts/carousel.js"></script>
+</body>
+</html>
