@@ -28,6 +28,14 @@ app.use(session({
 }));
 app.use(flash());
 
+// Code for handing flash messages
+app.use((req, res, next) => {
+    res.locals.user = req.session.user;
+    res.locals.success_msg = req.flash('success_msg');
+    res.locals.error_msg = req.flash('error_msg');
+    next();
+});
+
 // Code for custom middlewares
 app.use(homeController.logRequest);
 
@@ -43,6 +51,9 @@ app.post('/login', usersController.login);
 app.get('/logout', usersController.logout);
 app.get('/login/new', usersController.showCreateUserPage);
 app.post('/login/new', usersController.createUser);
+
+// Code for user registration
+app.post('/register', usersController.registerUser);
 
 // Code for homepage
 app.get('/', (req, res) => {
