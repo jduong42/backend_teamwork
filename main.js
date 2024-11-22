@@ -3,8 +3,10 @@ const express = require('express');
 const layout = require('express-ejs-layouts');
 const session = require('express-session');
 const flash = require('connect-flash');
+const MongoStore = require('connect-mongo');
 const { json } = require('express');
 const homeController = require('./controllers/homeController');
+const usersController = require('./controllers/usersController');
 const errorController = require('./controllers/errorController');
 
 // Setting up the application to use imported modules
@@ -21,18 +23,34 @@ app.use(express.static('public'));
 app.use(session({
     secret: 'your_secret_key',
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true ,
+    store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI})
 }));
 app.use(flash());
 
 // Code for custom middlewares
 app.use(homeController.logRequest);
 
-// Code for routes
+// Code for using user sessions
+app.use((req, res, next) => {
+  res.locals.user = req.session.user;
+  next();
+});
+
+// Code for login page
+app.get('/login', usersController.showLoginPage);
+app.post('/login', usersController.login);
+app.get('/logout', usersController.logout);
+app.get('/login/new', usersController.showCreateUserPage);
+app.post('/login/new', usersController.createUser);
+
+// Code for homepage
 app.get('/', (req, res) => {
     res.render('homepage', { title: 'Home' });
 });
 
+
+// Code for contact page
 app.get('/contact', (req, res) => {
     res.render('contact', { title: 'Contact Us', message: req.flash('success') });
 });

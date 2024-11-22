@@ -20,6 +20,13 @@
             <a href="/cart" class="icon-link">
                 <img src="/assets/icons/cart.png" alt="Cart" class="icon">
             </a>
+            <% if (user) { %>
+                <a href="/logout" class="icon-link">Logout</a>
+            <% } else { %>
+                <a href="/login" class="icon-link">
+                <img src="/assets/icons/user_logged_out.png" alt="User" class="icon">
+                </a>
+            <% } %>
         </div>
     </div>
     <div class="nav-bottom">
