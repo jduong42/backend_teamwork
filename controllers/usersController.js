@@ -22,7 +22,7 @@ exports.showLoginPage = (req, res) => {
     if (req.session.user) {
         return res.redirect('/');
     }
-    res.render('login', { title: 'Login', error: null });
+    res.render('login', { title: 'Login', success_msg: req.flash('success_msg'), error: null });
 };
 
 exports.login = async (req, res) => {
@@ -32,15 +32,20 @@ exports.login = async (req, res) => {
 
     if (user && await bcrypt.compare(password, user.password)) {
         req.session.user = user;
-        return res.redirect('/');
+        req.flash('success_msg', 'Login successful');
+    return res.render('login', { title: 'Login', success_msg: req.flash('success_msg'), error: null });
     }
-
     res.render('login', { title: 'Login', error: 'Invalid email or password' });
 };
 
-exports.logout = (req, res) => {
-    req.session.destroy();
-    res.redirect('/');
+exports.ajaxLogout = (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            console.error('Error destroying session:', err);
+            return res.status(500).json({ success: false, message: 'Error destroying session' });
+        }
+        res.json({ success: true, message: 'Logout successful' });
+    });
 };
 
 exports.showCreateUserPage = (req, res) => {
@@ -51,17 +56,17 @@ exports.createUser = async (req, res) => {
     const { email, password } = req.body;
     const db = await connectToDatabase();
     const existingUser = await db.collection('users').findOne({ email });
-  
+
     if (existingUser) {
-      req.flash('error_msg', 'User already exists');
-      return res.render('createUser', { title: 'Create User', success_msg: req.flash('success_msg'), error_msg: req.flash('error_msg') });
+        req.flash('error_msg', 'User already exists');
+    return res.render('createUser', { title: 'Create User', success_msg: req.flash('success_msg'), error_msg: req.flash('error_msg') });
     }
-  
+
     const hashedPassword = await bcrypt.hash(password, 10);
     await db.collection('users').insertOne({ email, password: hashedPassword });
     req.flash('success_msg', 'User created successfully');
     return res.render('createUser', { title: 'Create User', success_msg: req.flash('success_msg'), error_msg: req.flash('error_msg') });
-  };
+};
 
 exports.registerUser = async (req, res) => {
     const { email, password } = req.body;

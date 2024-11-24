@@ -8,7 +8,10 @@
   <div class="login-page">
     <div class="login-container">
       <h1>Login</h1>
-      <% if (error) { %>
+      <% if (success_msg && success_msg.length > 0) { %>
+        <p class="success"><%= success_msg %></p>
+      <% } %>
+      <% if (error && error.length > 0) { %>
         <p class="error"><%= error %></p>
       <% } %>
       <form action="/login" method="post">
@@ -18,7 +21,7 @@
         <input type="password" id="password" name="password" required>
         <button type="submit">Login</button>
       </form>
-      <button onclick="window.location.href='/login/new'">Create User</button>
+      <button class="create-user-button" onclick="window.location.href='/login/new'">Create User</button>
     </div>
   </div>
 </body>

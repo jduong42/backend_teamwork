@@ -48,18 +48,19 @@ app.use((req, res, next) => {
 // Code for login page
 app.get('/login', usersController.showLoginPage);
 app.post('/login', usersController.login);
-app.get('/logout', usersController.logout);
 app.get('/login/new', usersController.showCreateUserPage);
 app.post('/login/new', usersController.createUser);
+
+// Code for handing log out
+app.post('/ajax-logout', usersController.ajaxLogout);
 
 // Code for user registration
 app.post('/register', usersController.registerUser);
 
 // Code for homepage
 app.get('/', (req, res) => {
-    res.render('homepage', { title: 'Home' });
+    res.render('homepage', { title: 'Home', success_msg: req.flash('success_msg'), error_msg: req.flash('error_msg') });
 });
-
 
 // Code for contact page
 app.get('/contact', (req, res) => {

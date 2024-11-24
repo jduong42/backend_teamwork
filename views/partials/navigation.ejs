@@ -10,7 +10,9 @@
 <nav>
     <div class="nav-top">
         <div class="nav-left">
-            <img src="/assets/logos/ai_bicycle_logo.png" alt="Logo" class="logo">
+            <a href="/">
+                <img src="/assets/logos/ai_bicycle_logo.png" alt="Logo" class="logo">
+            </a>
             <input type="text" placeholder="Search..." class="search-bar">
         </div>
         <div class="nav-right">
@@ -21,10 +23,12 @@
                 <img src="/assets/icons/cart.png" alt="Cart" class="icon">
             </a>
             <% if (user) { %>
-                <a href="/logout" class="icon-link">Logout</a>
+                <a href="#" class="icon-link" id="logout-link">
+                    <img src="/assets/icons/user_logged_in.png" alt="User" class="icon">
+                </a>
             <% } else { %>
                 <a href="/login" class="icon-link">
-                <img src="/assets/icons/user_logged_out.png" alt="User" class="icon">
+                    <img src="/assets/icons/user_logged_out.png" alt="User" class="icon">
                 </a>
             <% } %>
         </div>
@@ -35,3 +39,7 @@
         <a href="/mountain-ebicycles">Mountain e-bicycles</a>
     </div>
 </nav>
+
+<div id="flash-container"></div> <!-- Flash message container -->
+
+<script src="/scripts/logout.js"></script>

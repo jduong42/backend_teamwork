@@ -66,3 +66,9 @@ nav {
 .nav-bottom a:hover {
     text-decoration: underline;
 }
+.error {
+    color: red;
+    font-size: 18px;
+    margin: 15px 0;
+    text-align: center;
+}
