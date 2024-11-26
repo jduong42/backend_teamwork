@@ -8,6 +8,9 @@ const { json } = require('express');
 const homeController = require('./controllers/homeController');
 const usersController = require('./controllers/usersController');
 const errorController = require('./controllers/errorController');
+const cartController = require('./controllers/cartController');
+const bikeController = require('./controllers/bikeController'); // Import the bike controller
+const articleController = require('./controllers/articleController'); // Import the article controller
 
 // Setting up the application to use imported modules
 const app = express();
@@ -23,8 +26,8 @@ app.use(express.static('public'));
 app.use(session({
     secret: 'your_secret_key',
     resave: false,
-    saveUninitialized: true ,
-    store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI})
+    saveUninitialized: true,
+    store: MongoStore.create({ mongoUrl: process.env.MONGODB_URI })
 }));
 app.use(flash());
 
@@ -51,6 +54,21 @@ app.post('/login', usersController.login);
 app.get('/login/new', usersController.showCreateUserPage);
 app.post('/login/new', usersController.createUser);
 
+// Define the routes for the bike pages
+app.get('/mountain', bikeController.showMountainBike);
+app.get('/city', bikeController.showCityBike); // Updated route
+app.get('/hybrid', bikeController.showHybridBike);
+
+// Define the routes for individual bicycles
+app.get('/1', bikeController.showBike1);
+app.get('/2', bikeController.showBike2);
+app.get('/3', bikeController.showBike3);
+
+// Define the routes for individual articles
+app.get('/1', articleController.showArticle1);
+app.get('/2', articleController.showArticle2);
+app.get('/3', articleController.showArticle3);
+
 // Code for handing log out
 app.post('/ajax-logout', usersController.ajaxLogout);
 
@@ -74,6 +92,9 @@ app.post('/contact', (req, res) => {
     req.flash('success', 'Your message has been sent successfully!');
     res.redirect('/contact');
 });
+
+// Define the route for the cart page
+app.get('/cart', cartController.showCart);
 
 // Error handling middleware
 app.use((req, res, next) => {
