@@ -10,11 +10,18 @@
 </head>
 <body>
     <div class="container">
-        <h1>Bicycle 2</h1>
+        <h1><%= bikes[1].name %></h1>
+        <img src="/assets/images/bike_1.png" alt="City E-Bike 1">
         <div class="bike-details">
+            <h2>Description</h2>
+            <p><%= bikes[1].description %></p>
+            <h2>Price</h2>
+            <h4><%= bikes[1].price %></h4>
             <h2>Details</h2>
-            <p>Details about Bicycle 2.</p>
-            <img src="/assets/images/bike_2.png" alt="Hybrid E-Bike 1">
+            <h4>Manufacturer:</h4>
+            <p><%= bikes[1].details.manufacturer %></p>
+            <h4>Weight:</h4>
+            <p><%= bikes[1].details.weight %></p>
         </div>
     </div>
 </body>

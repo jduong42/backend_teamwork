@@ -2,7 +2,7 @@
 
 const connectToDatabase = require('./mongodbConnectController');
 
-async function getArticles(req, res) {
+async function getArticles(req, res, article) {
     try {
         const client = await connectToDatabase();
         const db = client.db('test');
@@ -12,26 +12,14 @@ async function getArticles(req, res) {
         const articles = await articlesCollection.find({}).toArray();
 
         // consele.log the articles
-        console.log(articles);
+        // console.log(articles);
 
         // Render the articles page with the retrieved articles
-        res.render('articles', { title: 'Articles', articles });
+        res.render(article, { articles: articles, title: "Article" });
     } catch (error) {
         console.error("Error retrieving articles:", error);
         res.status(500).send("Error retrieving articles");
     }
 }
-
-exports.showArticle1 = (req, res) => {
-    res.render('article1', { title: 'Article 1' });
-};
-
-exports.showArticle2 = (req, res) => {
-    res.render('article2', { title: 'Article 2' });
-};
-
-exports.showArticle3 = (req, res) => {
-    res.render('article3', { title: 'Article 3' });
-};
 
 exports.getArticles = getArticles;

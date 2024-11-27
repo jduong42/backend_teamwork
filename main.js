@@ -9,8 +9,8 @@ const homeController = require('./controllers/homeController');
 const usersController = require('./controllers/usersController');
 const errorController = require('./controllers/errorController');
 const cartController = require('./controllers/cartController');
-const bikeController = require('./controllers/bikeController'); // Import the bike controller
-const articleController = require('./controllers/articleController'); // Import the article controller
+const bikeController = require('./controllers/bikeController');
+const articleController = require('./controllers/articleController');
 
 // Setting up the application to use imported modules
 const app = express();
@@ -60,20 +60,31 @@ app.get('/city', bikeController.showCityBike); // Updated route
 app.get('/hybrid', bikeController.showHybridBike);
 
 // Define the routes for individual bicycles
-app.get('/1', bikeController.showBike1);
-app.get('/2', bikeController.showBike2);
-app.get('/3', bikeController.showBike3);
+app.get('/bicycles/1', async (req, res) => {
+    const bike = "bike1"
+    await bikeController.getBikes(req, res, bike);
+});
+app.get('/bicycles/2', async (req, res) => {
+    const bike = "bike2"
+    await bikeController.getBikes(req, res, bike)
+});
+app.get('/bicycles/3', async (req, res) => {
+    const bike = "bike3"
+    await bikeController.getBikes(req, res, bike)
+});
 
 // Define the routes for individual articles
-app.get('/1', articleController.showArticle1);
-app.get('/2', articleController.showArticle2);
-app.get('/3', articleController.showArticle3);
-app.get('/articles', articleController.getArticles);
-
-// Temporary route for testing
-app.get('/test-articles', async (req, res) => {
-    await articleController.getArticles(req, res);
-    res.send('Check the console for the articles');
+app.get('/articles/1', async (req, res) => {
+    const article = "article1"
+    await articleController.getArticles(req, res, article);
+});
+app.get('/articles/2', async (req, res) => {
+    const article = "article2"
+    await articleController.getArticles(req, res, article);
+});
+app.get('/articles/3', async (req, res) => {
+    const article = "article3"
+    await articleController.getArticles(req, res, article);
 });
 
 // Code for user logout
