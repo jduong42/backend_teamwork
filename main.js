@@ -68,8 +68,15 @@ app.get('/3', bikeController.showBike3);
 app.get('/1', articleController.showArticle1);
 app.get('/2', articleController.showArticle2);
 app.get('/3', articleController.showArticle3);
+app.get('/articles', articleController.getArticles);
 
-// Code for handing log out
+// Temporary route for testing
+app.get('/test-articles', async (req, res) => {
+    await articleController.getArticles(req, res);
+    res.send('Check the console for the articles');
+});
+
+// Code for user logout
 app.post('/ajax-logout', usersController.ajaxLogout);
 
 // Code for user registration
