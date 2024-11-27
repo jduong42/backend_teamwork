@@ -7,7 +7,6 @@ const MongoStore = require('connect-mongo');
 const { json } = require('express');
 const homeController = require('./controllers/homeController');
 const usersController = require('./controllers/usersController');
-const errorController = require('./controllers/errorController');
 const cartController = require('./controllers/cartController');
 const bikeController = require('./controllers/bikeController');
 const articleController = require('./controllers/articleController');
@@ -56,7 +55,7 @@ app.post('/login/new', usersController.createUser);
 
 // Define the routes for the bike pages
 app.get('/mountain', bikeController.showMountainBike);
-app.get('/city', bikeController.showCityBike); // Updated route
+app.get('/city', bikeController.showCityBike);
 app.get('/hybrid', bikeController.showHybridBike);
 
 // Define the routes for individual bicycles
@@ -93,8 +92,8 @@ app.post('/ajax-logout', usersController.ajaxLogout);
 // Code for user registration
 app.post('/register', usersController.registerUser);
 
-// Code for homepage
-app.get('/', (req, res) => {
+// Code for to display the bicycles in the homepage
+app.get('/', bikeController.getMostPurchasedBikes, (req, res) => {
     res.render('homepage', { title: 'Home', success_msg: req.flash('success_msg'), error_msg: req.flash('error_msg') });
 });
 
@@ -104,7 +103,6 @@ app.get('/contact', (req, res) => {
 });
 
 app.post('/contact', (req, res) => {
-    // Handle form submission
     const { name, email, message } = req.body;
     console.log(`Received contact form submission: ${name}, ${email}, ${message}`);
     req.flash('success', 'Your message has been sent successfully!');

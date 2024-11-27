@@ -11,9 +11,6 @@ async function getArticles(req, res, article) {
         // Query the articles collection and store the results in an array
         const articles = await articlesCollection.find({}).toArray();
 
-        // consele.log the articles
-        // console.log(articles);
-
         // Render the articles page with the retrieved articles
         res.render(article, { articles: articles, title: "Article" });
     } catch (error) {

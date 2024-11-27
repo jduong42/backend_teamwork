@@ -11,14 +11,34 @@ async function getBikes(req, res, bike) {
         // Query the articles collection and store the results in an array
         const bikes = await bikesCollection.find({}).toArray();
 
-        // consele.log the articles
-        // console.log(articles);
-
         // Render the articles page with the retrieved articles
         res.render(bike, { bikes: bikes, title: "Bike Details" });
     } catch (error) {
         console.error("Error retrieving articles:", error);
         res.status(500).send("Error retrieving articles");
+    }
+}
+
+async function getMostPurchasedBikes(req, res) {
+    try {
+        const client = await connectToDatabase();
+        const db = client.db('test');
+        const bikesCollection = db.collection('products');
+
+        // Query the most purchased bikes
+        const bikes = await bikesCollection.find({}).toArray();
+
+        // Ensure each bike has an id property
+        bikes.forEach((bike, index) => {
+            bike.id = index + 1; // Assuming the id is the index + 1
+            bike.image = `/assets/images/bike_${bike.id}.png`;
+        });
+
+        // Render the homepage with the most purchased bikes
+        res.render('homepage', { title: 'Home', bikes });
+    } catch (error) {
+        console.error("Error retrieving bicycles:", error);
+        res.status(500).send("Error retrieving bicycles");
     }
 }
 
@@ -49,3 +69,4 @@ exports.showBike3 = (req, res) => {
 };
 
 exports.getBikes = getBikes;
+exports.getMostPurchasedBikes = getMostPurchasedBikes;
